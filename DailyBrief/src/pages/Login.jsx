@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { login, loading, error } = useAuthContext();
@@ -8,13 +9,17 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
-
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await login(email, password);
     if (result.success) {
       navigate("/");
+      
+       toast.success("Login successful!");
+
     } else {
+      toast.error(result.message);
       setMessage(result.message);
     }
   };
@@ -24,7 +29,7 @@ const Login = () => {
       <div className="w-full max-w-md rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl">
         <h2 className="text-3xl font-bold mb-6 text-center text-slate-900">Login to Daily Brief</h2>
 
-        {message && <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700 mb-4">{message}</div>}
+        {/* {message && <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700 mb-4">{message}</div>} */}
         {error && <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700 mb-4">{error}</div>}
 
         <form className="space-y-5" onSubmit={handleSubmit}>

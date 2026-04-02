@@ -4,14 +4,14 @@ DailyBrief is a full-stack news web application that allows users to explore rea
 
 The application uses a backend API proxy to securely fetch data from external news sources, ensuring that sensitive API keys are not exposed on the frontend.
 
-🚀 Features
+🚀 Features:-
 🌍 Category & Country-based News – Browse news by categories like sports, technology, business, etc.
 
-🔍 Search Functionality – Debounced search to reduce unnecessary API calls
+🔍 Search Functionality – Debounced search to reduce unnecessary API calls.
 
-🔥 Trending Section – Highlights top news in the hero section
+🔥 Trending Section – Highlights top news in the hero section.
 
-🔐 Authentication – Secure login/signup using Firebase Auth and JWT
+🔐 Authentication – Secure login/signup using Firebase Auth and JWT.
 
 ⭐ Bookmark System – Save favorite articles for later.
 

@@ -5,6 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 import api from "../config/axios";
 import TextToSpeech from "./TextToSpeech";
 import CommentSection from "../component/CommentSection";
+import toast from "react-hot-toast";
 
 const Article = () => {
   const location = useLocation();
@@ -66,6 +67,7 @@ const Article = () => {
         publishedAt: article.publishedAt || "",
       });
       setMessage("Article saved successfully.");
+      toast.success("Article saved successfully.");
     } catch (err) {
       setMessage(err.response?.data?.msg || "Unable to save article.");
     } finally {
