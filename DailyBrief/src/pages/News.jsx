@@ -14,15 +14,19 @@ const News = () => {
   //  Fetch news data
   useEffect(() => {
     const getData = async () => {
-    
-      if (news.length > 0) return;
 
       try {
+        if (news.length > 0) return;
         setLoading(true);
 
-        const data = await fetchNews();
-        setNews(data?.articles || []);
+        let data = await fetchNews();
 
+        // retry if failed
+        if (!data || data.articles.length === 0) {
+          data = await fetchNews();
+        }
+
+        setNews(data?.articles || []);
       } catch (error) {
         console.log(error);
       } finally {
@@ -33,14 +37,12 @@ const News = () => {
     getData();
   }, []);
 
-  
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
   return (
     <div className="px-4">
-
       {/* NEWS CARDS */}
       <div className="flex flex-wrap justify-center gap-6 mt-20">
         {loading ? (
@@ -51,7 +53,7 @@ const News = () => {
           </div>
         ) : news.length === 0 ? (
           <div className="w-full py-16 text-center text-gray-500">
-            Unable to load news. Please try again.
+            Unable to load news. Please Refresh again.
           </div>
         ) : (
           news
@@ -66,7 +68,6 @@ const News = () => {
       {news.length > 0 && (
         <div className="mt-12">
           <div className="flex flex-wrap justify-center items-center gap-2">
-
             {/* Prev */}
             <button
               disabled={page === 1}
@@ -108,7 +109,6 @@ const News = () => {
             >
               Next
             </button>
-
           </div>
         </div>
       )}

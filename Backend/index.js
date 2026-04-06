@@ -18,25 +18,28 @@ const startServer = async () => {
   app.use(cors());
   app.use(express.json());
 
+  app.get("/ping", (req, res) => {
+    res.sendStatus(200);
+  });
+
   //   Rate Limiter for full website
   const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 min
-    max: 200, 
+    max: 200,
     message: "Too many requests, please try again later",
   });
+   app.use("/api", globalLimiter);
 
-  app.use(globalLimiter);
+ 
 
-   //rate limiter for auth (login/signup)
+  //rate limiter for auth (login/signup)
   const authLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10 min
-    max: 10, 
+    max: 10,
     message: "Too many login attempts, try again later",
   });
 
-
-
-  app.use("/api/auth",authLimiter, authRoutes);
+  app.use("/api/auth", authLimiter, authRoutes);
   app.use("/api/news", newsRoutes);
   app.use("/api/bookmark", bookmarkRoutes);
   app.use("/api/comment", commentRoutes);
