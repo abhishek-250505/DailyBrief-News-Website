@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../config/axios";
 import { useAuthContext } from "../context/AuthContext";
 import { RiArrowRightLine } from "@remixicon/react";
+import toast from "react-hot-toast";
 
 const SavedNews = () => {
   const { user } = useAuthContext();
@@ -49,6 +50,7 @@ const SavedNews = () => {
   const handleUnsave = async (bookmarkId) => {
     try {
       await api.delete(`/bookmark/${bookmarkId}`);
+      toast.success("Article removed.");
       setBookmarks((prev) => prev.filter((bookmark) => bookmark._id !== bookmarkId));
     } catch (err) {
       setError(err.response?.data?.msg || "Unable to remove saved article.");
@@ -131,6 +133,7 @@ const SavedNews = () => {
                       </a>
                       <button
                         onClick={() => handleUnsave(bookmark._id)}
+                        
                         className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
                       >
                         Unsave

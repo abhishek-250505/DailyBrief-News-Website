@@ -4,7 +4,7 @@ import Comment from "../model/comment.js";
 import auth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-
+//comment added in database 
 router.post("/", auth, async (req, res) => {
   const comment = await Comment.create({
     userId: req.user,
@@ -13,7 +13,7 @@ router.post("/", auth, async (req, res) => {
 
   res.json(comment);
 });
-
+//get comment of news article
 router.get("/:newsId", async (req, res) => {
   const newsId = decodeURIComponent(req.params.newsId);
 
@@ -36,6 +36,7 @@ router.get("/:newsId", async (req, res) => {
   res.json(formatted);
 });
 
+// delete comment
 router.delete("/:id", auth, async (req, res) => {
   const comment = await Comment.findById(req.params.id);
   if (!comment) return res.status(404).json({ msg: "Comment not found" });

@@ -11,27 +11,35 @@ const News = () => {
   const itemsPerPage = 10;
   const totalPages = Math.ceil(news.length / itemsPerPage);
 
-  // Fetch News
+  //  Fetch news data
   useEffect(() => {
-    (async () => {
-      setLoading(true);
+    const getData = async () => {
+      // Agar data already hai → fetch skip
+      if (news.length > 0) return;
 
-      if (news.length === 0) {
+      try {
+        setLoading(true);
+
         const data = await fetchNews();
         setNews(data?.articles || []);
-      }
 
-      setLoading(false);
-    })();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
   }, []);
 
-  
+  // Scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
   return (
-    <div className="px-4 ">
+    <div className="px-4">
 
       {/* NEWS CARDS */}
       <div className="flex flex-wrap justify-center gap-6 mt-20">
@@ -43,7 +51,7 @@ const News = () => {
           </div>
         ) : news.length === 0 ? (
           <div className="w-full py-16 text-center text-gray-500">
-            No articles found for this selection.
+            Unable to load news. Please try again.
           </div>
         ) : (
           news

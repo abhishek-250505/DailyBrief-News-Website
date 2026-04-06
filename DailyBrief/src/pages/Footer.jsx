@@ -1,9 +1,13 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import {useNavigate } from "react-router-dom";
 
 const Footer = () => {
    const [currentDate, setCurrentDate] = useState("");
+   const navigate = useNavigate();
+  
+ 
    useEffect(() => {
       const DateData = new Intl.DateTimeFormat("en-GB", {
         day: "numeric",
@@ -19,6 +23,10 @@ const Footer = () => {
       const intervalId = setInterval(updateDate, 3600000);
       return () => clearInterval(intervalId);
     }, []);
+
+    const handlenavigate = (e)=>{
+      naviga
+    }
   return (
     <footer className="bg-gray-900 text-gray-300 mt-20">
       
@@ -37,8 +45,9 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white mb-3">
             Quick Links
           </h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-white cursor-pointer">Home</li>
+          <ul className="space-y-2 text-sm" onClick={(e) => console.log(e)
+          }>
+            <li className="hover:text-white cursor-pointer" >Home</li>
             <li className="hover:text-white cursor-pointer">Trending</li>
             <li className="hover:text-white cursor-pointer">Saved News</li>
             <li className="hover:text-white cursor-pointer">Categories</li>
