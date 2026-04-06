@@ -14,7 +14,7 @@ const News = () => {
   //  Fetch news data
   useEffect(() => {
     const getData = async () => {
-      // Agar data already hai → fetch skip
+    
       if (news.length > 0) return;
 
       try {
@@ -33,7 +33,7 @@ const News = () => {
     getData();
   }, []);
 
-  // Scroll to top on page change
+  
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);

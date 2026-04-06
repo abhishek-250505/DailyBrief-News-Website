@@ -24,9 +24,7 @@ const Footer = () => {
       return () => clearInterval(intervalId);
     }, []);
 
-    const handlenavigate = (e)=>{
-      naviga
-    }
+    
   return (
     <footer className="bg-gray-900 text-gray-300 mt-20">
       
@@ -45,12 +43,12 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white mb-3">
             Quick Links
           </h3>
-          <ul className="space-y-2 text-sm" onClick={(e) => console.log(e)
-          }>
-            <li className="hover:text-white cursor-pointer" >Home</li>
-            <li className="hover:text-white cursor-pointer">Trending</li>
-            <li className="hover:text-white cursor-pointer">Saved News</li>
-            <li className="hover:text-white cursor-pointer">Categories</li>
+          <ul className="space-y-2 text-sm" 
+          >
+            <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/")}>Home</li>
+            <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/trending")}>Trending</li>
+            <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/saved")}>Saved News</li>
+            
           </ul>
         </div>
 

@@ -7,6 +7,7 @@ import SavedNews from './pages/SavedNews'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import { Toaster } from "react-hot-toast";
+import TrendingSection from './component/TrendingSection'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/article" element={<Article />} />
         <Route path="/saved" element={<SavedNews />} />
+         <Route path="/trending" element={<TrendingSection/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
