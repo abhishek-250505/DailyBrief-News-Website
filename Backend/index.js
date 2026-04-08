@@ -21,7 +21,6 @@ const startServer = async () => {
   credentials: true
 }));
 
-app.options("*", cors());
   app.use(express.json());
 
   app.get("/ping", (req, res) => {
