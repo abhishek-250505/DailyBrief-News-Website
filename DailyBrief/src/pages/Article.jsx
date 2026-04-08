@@ -6,6 +6,7 @@ import api from "../config/axios";
 import TextToSpeech from "./TextToSpeech";
 import CommentSection from "../component/CommentSection";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const Article = () => {
   const location = useLocation();
@@ -13,7 +14,9 @@ const Article = () => {
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
-
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   if (!article) return <h1 className="text-center mt-24 text-xl">No Article Found</h1>;
 
   const displayText = article.content || article.description || "";

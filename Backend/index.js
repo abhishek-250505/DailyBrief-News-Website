@@ -14,10 +14,10 @@ const startServer = async () => {
   await connectDB();
 
   const app = express();
-  app.set("trust proxy", 1);
+  // app.set("trust proxy", 1);
 
   app.use(cors({
-  origin: "https://daily-brief-news-website.vercel.app",
+  origin: ["https://daily-brief-news-website.vercel.app","http://localhost:5173"],
   credentials: true
 }));
 
