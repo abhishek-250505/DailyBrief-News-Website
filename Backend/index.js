@@ -14,8 +14,14 @@ const startServer = async () => {
   await connectDB();
 
   const app = express();
+  app.set("trust proxy", 1);
 
-  app.use(cors());
+  app.use(cors({
+  origin: "https://daily-brief-news-website.vercel.app",
+  credentials: true
+}));
+
+app.options("*", cors());
   app.use(express.json());
 
   app.get("/ping", (req, res) => {
