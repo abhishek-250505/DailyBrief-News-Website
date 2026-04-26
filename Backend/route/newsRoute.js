@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     const cachedData = await redisClient.get(cacheKey);
 
     if (cachedData) {
-      console.log(" Serving from Redis");
+      // console.log(" Serving from Redis");
       return res.json(JSON.parse(cachedData));
     }
 
@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
       ? `https://newsapi.org/v2/everything?${params.toString()}&apiKey=${process.env.NEWS_API_KEY}`
       : `https://newsapi.org/v2/top-headlines?${params.toString()}&apiKey=${process.env.NEWS_API_KEY}`;
 
-    console.log("🌐 Fetching from API");
+    // console.log(" Fetching from API");
 
     const response = await axios.get(endpoint, {
       timeout: 8000
@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
     res.json(data);
 
   } catch (err) {
-    console.error(" ERROR:", err?.response?.data || err.message);
+    // console.error(" ERROR:", err?.response?.data || err.message);
 
     //  fallback safe response
     res.status(200).json({
