@@ -1,6 +1,6 @@
-// routes/newsRoutes.js
 import express from "express";
 import axios from "axios";
+import redisClient from "../config/redis.js";
 
 const router = express.Router();
 
@@ -12,6 +12,18 @@ router.get("/", async (req, res) => {
     const pageSize = req.query.pageSize || 100;
     const page = req.query.page || 1;
 
+    //  UNIQUE CACHE KEY
+    const cacheKey = `news:${category}:${country}:${query}:${page}`;
+
+    //  1. CHECK CACHE
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      console.log(" Serving from Redis");
+      return res.json(JSON.parse(cachedData));
+    }
+
+    //  2. BUILD API
     const params = new URLSearchParams();
     const useEverything = Boolean(query);
 
@@ -30,12 +42,26 @@ router.get("/", async (req, res) => {
       ? `https://newsapi.org/v2/everything?${params.toString()}&apiKey=${process.env.NEWS_API_KEY}`
       : `https://newsapi.org/v2/top-headlines?${params.toString()}&apiKey=${process.env.NEWS_API_KEY}`;
 
-    const response = await axios.get(endpoint);
+    console.log("🌐 Fetching from API");
 
-    res.json(response.data);
+    const response = await axios.get(endpoint, {
+      timeout: 8000
+    });
+
+    const data = response.data;
+
+    // 3. STORE IN REDIS
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(data));
+
+    res.json(data);
+
   } catch (err) {
-    console.error(err?.response?.data || err.message);
-    res.status(500).json({ msg: "Error fetching news" });
+    console.error(" ERROR:", err?.response?.data || err.message);
+
+    //  fallback safe response
+    res.status(200).json({
+      articles: []
+    });
   }
 });
 
